@@ -28,12 +28,12 @@ class ExternalEmailValidationQuestion extends PluginBase {
         $this->event;
 
         $this->renderPartial('button',[
-            'label' => $this->gT('Check'),
-            'answerFieldId' => $this->getAnswerFieldId(),
-            'options' =>[
+            'buttonLabel' => $this->gT('Check'),
+            'buttonHtmlOptions' =>[
                 'id' => $this->getButtonId(),
                 'class' => 'btn btn-default',
             ],
+            'model' => $this,
         ]);
     }
 
@@ -97,17 +97,25 @@ class ExternalEmailValidationQuestion extends PluginBase {
     /**
      * @return string
      */
-    private function  getButtonId()
+    public function  getButtonId()
     {
         $event = $this->event;
-        return "check-external-validation::" . $event->get('qid');
+        return "check-external-validation-button::" . $event->get('qid');
     }
-
 
     /**
      * @return string
      */
-    private function getAnswerFieldId(){
+    public function  getId()
+    {
+        $event = $this->event;
+        return "check-external-validation-" . $event->get('qid');
+    }
+
+    /**
+     * @return string
+     */
+    public function getAnswerFieldId(){
         $event = $this->event;
         return "answer" . $event->get('surveyId') . "X" . $event->get('gid') . "X" .  $event->get('qid');
     }

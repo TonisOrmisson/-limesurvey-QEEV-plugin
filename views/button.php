@@ -1,10 +1,11 @@
 <?php
-/** @var array $options */
-/** @var string $label */
-/** @var string $answerFieldId */
+/** @var array $buttonHtmlOptions */
+/** @var string $buttonLabel */
+/** @var ExternalEmailValidationQuestion $model */
 
-Yii::app()->clientScript->registerScript("script".$answerFieldId, <<<JS
-$("#$answerFieldId").change(function() {
+Yii::app()->clientScript->registerScript("script".$model->getAnswerFieldId(), <<<JS
+moveExternalValidation();
+$("#{$model->getAnswerFieldId()}").change(function() {
     if (validateValueExternally($( this ).val())) {
         externalValidationOK();
     } else {
@@ -26,11 +27,19 @@ function externalValidationFailed() {
   
 }
 
+function moveExternalValidation() {
+  $("#{$model->getId()}").insertAfter("#{$model->getAnswerFieldId()}")
+  $("#{$model->getId()}").show();
+}
+
 JS
 );
 
 ?>
+<div id="<?=$model->getId()?>" hidden >
+    <?= CHtml::tag('div', $buttonHtmlOptions, $buttonLabel);?>
+</div>
 
-<?= CHtml::tag('div',$options,$label);?>
+
 
 
