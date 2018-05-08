@@ -1,4 +1,7 @@
 <?php
+
+use LimeSurvey\PluginManager;
+
 /**
  * @author Tõnis Ormisson <tonis@andmemasin.eu>
  * @since 3.0.
@@ -15,10 +18,11 @@ class ExternalEmailValidationQuestion extends PluginBase {
 
     protected $templates;
 
+
     /* Register plugin on events*/
     public function init() {
-        $this->subscribe('afterFindSurvey');
-        $this->subscribe('beforeQuestionRender');
+        //$this->subscribe('beforeQuestionRender');
+        $this->subscribe('beforeSurveySettings');
         $this->subscribe('newSurveySettings');
     }
 
@@ -37,14 +41,14 @@ class ExternalEmailValidationQuestion extends PluginBase {
     public function beforeSurveySettings()
     {
         $event = $this->event;
-        $event->set("surveysettings.{$this->id}", array(
+        $event->set("surveysettings.{$this->id}", [
             'name' => get_class($this),
-            'settings' => array(
-                'url' => array(
+            'settings' => [
+                'url' => [
                     'type' => 'string',
                     'label' => 'URL where for validation request is sent',
-                ),
-                'authType' => array(
+                ],
+                'authType' => [
                     'type' => 'select',
                     'label'=> 'Remote authentication type',
                     'options' => [
@@ -53,19 +57,24 @@ class ExternalEmailValidationQuestion extends PluginBase {
                         self::AUTH_API_KEY => "API key",
                     ],
                     'default' => self::AUTH_BASIC,
-                ),
-                'username' => array(
+                    'current' => $this->get('authType', 'Survey', $event->get('survey'))
+                ],
+                'username' => [
                     'type' => 'string',
                     'label' => 'Username / API key',
-                ),
-                'password' => array(
+                    'current' => $this->get('username', 'Survey', $event->get('survey'))
+                ],
+                'password' => [
                     'type' => 'password',
                     'label' => 'Password',
-                ),
+                    'current' => $this->get('password', 'Survey', $event->get('survey'))
+                ],
 
-            )
-        ));
+            ]
+        ]);
     }
+
+
 
     /**
      * add new survey settings
