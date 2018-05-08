@@ -1,7 +1,5 @@
 <?php
 
-use LimeSurvey\PluginManager;
-
 /**
  * @author Tõnis Ormisson <tonis@andmemasin.eu>
  * @since 3.0.
