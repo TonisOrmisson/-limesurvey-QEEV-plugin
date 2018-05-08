@@ -26,15 +26,22 @@ class ExternalEmailValidationQuestion extends PluginBase {
 
     public function beforeQuestionRender(){
         $this->event;
+        $event = $this->event;
+        $questionQode = $event->get('code');
+        $questionsString = $this->get("questions",'Survey',$event->get('surveyId'));
+        $usedCodes = explode(',',$questionsString);
+        if (in_array($questionQode,$usedCodes)) {
+            $this->renderPartial('button',[
+                'buttonLabel' => $this->gT('Check'),
+                'buttonHtmlOptions' =>[
+                    'id' => $this->getButtonId(),
+                    'class' => 'btn btn-default',
+                ],
+                'model' => $this,
+            ]);
 
-        $this->renderPartial('button',[
-            'buttonLabel' => $this->gT('Check'),
-            'buttonHtmlOptions' =>[
-                'id' => $this->getButtonId(),
-                'class' => 'btn btn-default',
-            ],
-            'model' => $this,
-        ]);
+        }
+
     }
 
 
@@ -75,6 +82,12 @@ class ExternalEmailValidationQuestion extends PluginBase {
                     'type' => 'password',
                     'label' => 'Password',
                     'current' => $this->get('password', 'Survey', $event->get('survey'))
+                ],
+                'questions' => [
+                    'type' => 'string',
+                    'label' => 'Questions',
+                    'help' => 'Comma-separated question names (codes) on which the validation occurs',
+                    'current' => $this->get('questions', 'Survey', $event->get('survey'))
                 ],
 
             ]
