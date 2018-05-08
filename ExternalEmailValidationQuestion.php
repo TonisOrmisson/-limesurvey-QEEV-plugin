@@ -19,7 +19,7 @@ class ExternalEmailValidationQuestion extends PluginBase {
 
     /* Register plugin on events*/
     public function init() {
-        //$this->subscribe('beforeQuestionRender');
+        $this->subscribe('beforeQuestionRender');
         $this->subscribe('beforeSurveySettings');
         $this->subscribe('newSurveySettings');
     }
@@ -27,6 +27,14 @@ class ExternalEmailValidationQuestion extends PluginBase {
     public function beforeQuestionRender(){
         $this->event;
 
+        $this->renderPartial('button',[
+            'label' => $this->gT('Check'),
+            'answerFieldId' => $this->getAnswerFieldId(),
+            'options' =>[
+                'id' => $this->getButtonId(),
+                'class' => 'btn btn-default',
+            ],
+        ]);
     }
 
 
@@ -85,5 +93,24 @@ class ExternalEmailValidationQuestion extends PluginBase {
             $this->set($name, $value, 'Survey', $event->get('survey'));
         }
     }
+
+    /**
+     * @return string
+     */
+    private function  getButtonId()
+    {
+        $event = $this->event;
+        return "check-external-validation::" . $event->get('qid');
+    }
+
+
+    /**
+     * @return string
+     */
+    private function getAnswerFieldId(){
+        $event = $this->event;
+        return "answer" . $event->get('surveyId') . "X" . $event->get('gid') . "X" .  $event->get('qid');
+    }
+
 
 }
