@@ -45,6 +45,7 @@ class ExternalEmailValidationQuestion extends PluginBase {
                 'url' => [
                     'type' => 'string',
                     'label' => 'URL where for validation request is sent',
+                    'current' => $this->get('url', 'Survey', $event->get('survey'))
                 ],
                 'authType' => [
                     'type' => 'select',
