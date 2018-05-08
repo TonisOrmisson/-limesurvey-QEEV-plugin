@@ -106,7 +106,7 @@ class ExternalEmailValidationQuestion extends PluginBase {
     /**
      * @return string
      */
-    public function  getId()
+    public function  getContainerId()
     {
         $event = $this->event;
         return "check-external-validation-" . $event->get('qid');
@@ -118,6 +118,15 @@ class ExternalEmailValidationQuestion extends PluginBase {
     public function getAnswerFieldId(){
         $event = $this->event;
         return "answer" . $event->get('surveyId') . "X" . $event->get('gid') . "X" .  $event->get('qid');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUrl(){
+        $event = $this->event;
+        $url = $this->get("url",'Survey',$event->get('surveyId'));
+        return $url;
     }
 
 
