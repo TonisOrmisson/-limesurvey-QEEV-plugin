@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <metadata>
+        <name>ExternalEmailValidationQuestion</name>
+        <type>plugin</type>
+        <creationDate>2018-05-08</creationDate>
+        <last_update>2018-05-08</last_update>
+        <author>Tõnis Ormisson</author>
+        <authorUrl>https://andmemasin.eu</authorUrl>
+        <license>GNU General Public License version 3 or later</license>
+        <version>0.1.0</version>
+        <description><![CDATA[Core: Allow usung external query to validate an e-mail address]]></description>
+    </metadata>
+
+    <compatibility>
+        <version>4.0</version>
+        <version>3.0</version>
+    </compatibility>
+</config>
