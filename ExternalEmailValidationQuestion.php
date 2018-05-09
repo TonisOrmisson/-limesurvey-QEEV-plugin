@@ -27,14 +27,14 @@ class ExternalEmailValidationQuestion extends PluginBase {
         $this->subscribe('newSurveySettings');
     }
 
-    public function beforeQuestionRender(){
+    public function beforeQuestionRender() {
         $this->event;
         $event = $this->event;
         $questionQode = $event->get('code');
-        $questionsString = $this->get("questions",'Survey',$event->get('surveyId'));
-        $usedCodes = explode(',',$questionsString);
-        if (in_array($questionQode,$usedCodes)) {
-            $this->renderPartial('button',[
+        $questionsString = $this->get("questions", 'Survey', $event->get('surveyId'));
+        $usedCodes = explode(',', $questionsString);
+        if (in_array($questionQode, $usedCodes)) {
+            $this->renderPartial('button', [
                 'buttonLabel' => $this->gT('Check'),
                 'buttonHtmlOptions' =>[
                     'id' => $this->getButtonId(),
@@ -140,17 +140,17 @@ class ExternalEmailValidationQuestion extends PluginBase {
     /**
      * @return string
      */
-    public function getAnswerFieldId(){
+    public function getAnswerFieldId() {
         $event = $this->event;
-        return "answer" . $event->get('surveyId') . "X" . $event->get('gid') . "X" .  $event->get('qid');
+        return "answer" . $event->get('surveyId') . "X" . $event->get('gid') . "X" . $event->get('qid');
     }
 
     /**
      * @return mixed
      */
-    public function getUrl(){
+    public function getUrl() {
         $event = $this->event;
-        $url = $this->get("url",'Survey',$event->get('surveyId'));
+        $url = $this->get("url", 'Survey', $event->get('surveyId'));
         return $url;
     }
 
