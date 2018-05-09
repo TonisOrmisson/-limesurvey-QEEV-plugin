@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "limesurvey/limesurvey9": "~3.0"
+        "limesurvey/limesurvey": "~3.0"
     },
     "extra": {
         "branch-alias": {
