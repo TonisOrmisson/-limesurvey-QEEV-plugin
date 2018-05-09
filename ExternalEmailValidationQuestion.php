@@ -14,8 +14,6 @@ class ExternalEmailValidationQuestion extends PluginBase {
     static protected $description = 'External Email Validation for a question';
     static protected $name = 'External Email Validation';
 
-    protected $templates;
-
 
     /* Register plugin on events*/
     public function init() {
@@ -113,7 +111,7 @@ class ExternalEmailValidationQuestion extends PluginBase {
     public function  getButtonId()
     {
         $event = $this->event;
-        return "check-external-validation-button::" . $event->get('qid');
+        return "check-external-validation-button-" . $event->get('qid');
     }
 
     /**
@@ -123,6 +121,15 @@ class ExternalEmailValidationQuestion extends PluginBase {
     {
         $event = $this->event;
         return "check-external-validation-" . $event->get('qid');
+    }
+
+    /**
+     * @return string
+     */
+    public function  getMessageId()
+    {
+        $event = $this->event;
+        return "check-external-validation-message-" . $event->get('qid');
     }
 
     /**
