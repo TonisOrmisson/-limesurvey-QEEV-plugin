@@ -1,0 +1,28 @@
+{
+    "name": "tonisormisson/limesurvey-QEEV-plugin",
+    "description": "A LimeSurvey Plugin to allow usung external query to validate an e-mail address",
+    "keywords": ["limesurvey"],
+    "homepage": "https://github.com/TonisOrmisson/limesurvey-QEEV-plugin",
+    "type": "limesurvey-plugin",
+    "license": "GPL-2.0",
+    "support": {
+        "issues": "https://github.com/TonisOrmisson/limesurvey-QEEV-plugin/issues",
+        "source": "https://github.com/TonisOrmisson/limesurvey-QEEV-plugin"
+    },
+    "authors": [
+        {
+            "name": "Tõnis Ormisson",
+            "email": "tonis@andmemasin.eu",
+            "homepage": "https://andmemasin.eu",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "limesurvey/limesurvey9": "~3.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    }
+}
