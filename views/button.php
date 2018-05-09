@@ -9,33 +9,27 @@ var externalValidationContainer = $("#{$model->getContainerId()}");
 var externalValidationMessageContainer = $("#{$model->getMessageId()}");
 var externalValidationAnswerField = $("#{$model->getAnswerFieldId()}");
 var externalValidationButton = $("#{$model->getButtonId()}");
-
 moveExternalValidation();
 
 externalValidationAnswerField.change(function() {
-    if (validateValueExternally($( this ).val())) {
-        externalValidationOK();
-    } else {
-        externalValidationFailed();
-    }
+    validateValueExternally($( this ).val());
 });
 
 externalValidationButton.click(function() {
-    if (validateValueExternally($("#{$model->getAnswerFieldId()}").val())) {
-        externalValidationOK();
-    } else {
-        externalValidationFailed();
-    }
+    validateValueExternally(externalValidationAnswerField.val());
 });
 
 function validateValueExternally(valueToValidate) {
+    externalValidationMessageContainer.hide({$model->getAnimationDelay()});
+    var language = $('html').attr('lang');
     $.ajax({
         type: 'POST',
         url: "{$model->getUrl()}",
-        data: {email_address: valueToValidate},
+        data: {email_address: valueToValidate, language:language},
         dataType: 'json',
         success: function(data) {
             if (data.success) {
+                console.log(data.success);
                 externalValidationOK();
             } else {
                 externalValidationFailed(data.errors)
@@ -51,8 +45,9 @@ function validateValueExternally(valueToValidate) {
 
 
 function externalValidationOK() {
+    externalValidationMessageContainer.html(null);
     externalValidationMessageContainer.html('a-ok');
-    externalValidationMessageContainer.show();
+    externalValidationMessageContainer.show({$model->getAnimationDelay()});
 }
 
 function externalValidationFailed(errors) {
@@ -65,11 +60,11 @@ function externalValidationFailed(errors) {
     }
     html += "</ul>"
     externalValidationMessageContainer.html(html);
-    externalValidationMessageContainer.show();
+    externalValidationMessageContainer.show({$model->getAnimationDelay()});
 }
 
 function moveExternalValidation() {
-  externalValidationContainer.insertAfter("#{$model->getAnswerFieldId()}")
+  externalValidationContainer.insertAfter(externalValidationAnswerField);
   externalValidationContainer.show();
 }
 
@@ -77,10 +72,9 @@ JS
 );
 
 ?>
-<div id="<?= $model->getContainerId() ?>" hidden >
+<div id="<?= $model->getContainerId() ?>" class="check-external-validation-container" hidden>
     <?= CHtml::tag('div', $buttonHtmlOptions, $buttonLabel); ?>
-    <div id="<?= $model->getMessageId() ?>" hidden >
-    </div>
+    <div id="<?= $model->getMessageId() ?>" hidden  class="alert alert-danger"></div>
 </div>
 
 

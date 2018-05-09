@@ -10,6 +10,8 @@ class ExternalEmailValidationQuestion extends PluginBase {
     const AUTH_BASIC = 1;
     const AUTH_API_KEY = 2;
 
+    const DEFAULT_ANIMATION_DELAY = 200;
+
     protected $storage = 'DbStorage';
     static protected $description = 'External Email Validation for a question';
     static protected $name = 'External Email Validation';
@@ -147,6 +149,11 @@ class ExternalEmailValidationQuestion extends PluginBase {
         $event = $this->event;
         $url = $this->get("url",'Survey',$event->get('surveyId'));
         return $url;
+    }
+
+    public function getAnimationDelay()
+    {
+        return self::DEFAULT_ANIMATION_DELAY;
     }
 
 
