@@ -12,6 +12,9 @@ class ExternalEmailValidationQuestion extends PluginBase {
 
     const DEFAULT_ANIMATION_DELAY = 200;
 
+    const DEFAULT_SUCCESS_MESSAGE_CLASS = "alert alert-success";
+    const DEFAULT_FAILED__MESSAGE_CLASS = "alert alert-danger";
+
     protected $storage = 'DbStorage';
     static protected $description = 'External Email Validation for a question';
     static protected $name = 'External Email Validation';
@@ -156,5 +159,20 @@ class ExternalEmailValidationQuestion extends PluginBase {
         return self::DEFAULT_ANIMATION_DELAY;
     }
 
+    /**
+     * @return string
+     */
+    public function getMessageSuccessClass()
+    {
+        return self::DEFAULT_SUCCESS_MESSAGE_CLASS;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessageFailedClass()
+    {
+        return self::DEFAULT_FAILED__MESSAGE_CLASS;
+    }
 
 }

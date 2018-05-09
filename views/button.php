@@ -12,14 +12,18 @@ var externalValidationButton = $("#{$model->getButtonId()}");
 moveExternalValidation();
 
 externalValidationAnswerField.change(function() {
-    validateValueExternally($( this ).val());
+    validateValueExternally();
 });
 
 externalValidationButton.click(function() {
-    validateValueExternally(externalValidationAnswerField.val());
+    validateValueExternally();
 });
 
-function validateValueExternally(valueToValidate) {
+function validateValueExternally() {
+    // always tri & lowercase
+    valueToValidate = externalValidationAnswerField.val().trim().toLowerCase();
+    externalValidationAnswerField.val(valueToValidate);
+    
     externalValidationMessageContainer.hide({$model->getAnimationDelay()});
     var language = $('html').attr('lang');
     $.ajax({
@@ -44,8 +48,10 @@ function validateValueExternally(valueToValidate) {
 }
 
 
+
 function externalValidationOK() {
     externalValidationMessageContainer.html(null);
+    externalValidationMessageContainer.attr("class", "{$model->getMessageSuccessClass()}");
     externalValidationMessageContainer.html('a-ok');
     externalValidationMessageContainer.show({$model->getAnimationDelay()});
 }
@@ -58,8 +64,9 @@ function externalValidationFailed(errors) {
             html += "<li>" + errors[key] + "</li>"
         }
     }
-    html += "</ul>"
+    html += "</ul>";
     externalValidationMessageContainer.html(html);
+    externalValidationMessageContainer.attr("class", "{$model->getMessageFailedClass()}");
     externalValidationMessageContainer.show({$model->getAnimationDelay()});
 }
 
